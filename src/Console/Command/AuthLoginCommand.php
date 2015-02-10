@@ -25,13 +25,13 @@ class AuthLoginCommand extends Command
         $client = new Client();
 
         if ($configLoader->configExists()) {
-            $continue = $dialog->ask(
+            $continue = $dialog->askConfirmation(
                 $output,
-                'The configuration file already exists. Do you want to continue? (y/n, default: y) ',
-                'y'
+                '<info>The configuration file already exists</info>. Do you want to continue? [yes] ',
+                true
             );
 
-            if (!in_array($continue, ['y', 'yes'])) {
+            if (!$continue) {
                 $output->writeln('Aborded.');
 
                 return;
@@ -39,7 +39,7 @@ class AuthLoginCommand extends Command
         }
 
         $username = $dialog->ask($output, 'Username: ', null);
-        $password = $dialog->ask($output, 'Password: ', null);
+        $password = $dialog->askHiddenResponse($output, 'Password (hidden): ', null);
 
         try {
             $response = $client->getAuthorization($username, $password);
