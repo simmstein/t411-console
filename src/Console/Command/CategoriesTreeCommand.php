@@ -46,13 +46,15 @@ class CategoriesTreeCommand extends Command
 
             foreach ($response->getData() as $category) {
                 if (isset($category['name'])) {
-                    $output->writeln(sprintf('%s', $category['name']));
+                    $output->writeln(sprintf('`- %s', $category['name']));
                 }
 
                 if (!empty($category['cats'])) {
+                    $isFirst = true;
+
                     foreach ($category['cats'] as $subCategory) {
                         if (isset($subCategory['name'])) {
-                            $output->writeln(sprintf('> %s', $subCategory['name']));
+                            $output->writeln(sprintf('   |- %s', $subCategory['name']));
                         }
                     }
                 }
