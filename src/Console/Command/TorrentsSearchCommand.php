@@ -74,7 +74,7 @@ class TorrentsSearchCommand extends Command
                 foreach ($terms as $term) {
                     if (isset($termType['terms'][$term])) {
                         if (!isset($finalTerms[$termTypeId])) {
-                            $finalTerms[$termTypeId] = array();
+                            $finalTerms[$termTypeId] = [];
                         }
 
                         if (!in_array($term, $finalTerms[$termTypeId])) {

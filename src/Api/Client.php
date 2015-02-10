@@ -13,7 +13,7 @@ class Client
 
     public function __construct()
     {
-        $this->client = new GuzzleClient(array('base_url' => 'https://api.t411.me'));
+        $this->client = new GuzzleClient(['base_url' => 'https://api.t411.me']);
     }
 
     public function getAuthorization($username, $password)
@@ -48,9 +48,9 @@ class Client
     public function searchTorrents($query, $options)
     {
         $url = '/torrents/search/'.urlencode($query);
-        $query = array();
+        $query = [];
 
-        foreach (array('offset', 'limit', 'cat') as $p) {
+        foreach (['offset', 'limit', 'cat'] as $p) {
             if (!empty($options[$p])) {
                 $query[$p] = $options[$p];
             }

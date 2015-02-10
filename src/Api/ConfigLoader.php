@@ -33,6 +33,6 @@ class ConfigLoader
 
     public function getConfig()
     {
-        return $this->configExists() ? Yaml::parse($this->configFile) : array();
+        return $this->configExists() ? Yaml::parse($this->configFile) : [];
     }
 }
