@@ -40,6 +40,11 @@ class Client
         return $this->get(true, '/categories/tree');
     }
 
+    public function getTermsTree()
+    {
+        return $this->get(true, '/terms/tree');
+    }
+
     public function get($needAuthorization, $uri, array $options = array())
     {
         return $this->send($needAuthorization, 'get', $uri, $options);
