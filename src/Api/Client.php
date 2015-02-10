@@ -9,6 +9,8 @@ class Client
 {
     protected $client;
 
+    protected $token;
+
     public function __construct()
     {
         $this->client = new GuzzleClient(array('base_url' => 'https://api.t411.me'));
@@ -17,6 +19,7 @@ class Client
     public function getAuthorization($username, $password)
     {
         return $this->post(
+            false,
             '/auth',
             array(
                 'body' => array(
@@ -27,23 +30,39 @@ class Client
         );
     }
 
+    public function setAuthorization($token)
+    {
+        $this->token = $token;
+    }
+
     public function getCategoriesTree()
     {
-        return $this->get('/categories/tree');
+        return $this->get(true, '/categories/tree');
     }
 
-    public function get($uri, array $options = array())
+    public function get($needAuthorization, $uri, array $options = array())
     {
-        return $this->send('get', $uri, $options);
+        return $this->send($needAuthorization, 'get', $uri, $options);
     }
 
-    public function post($uri, array $options = array())
+    public function post($needAuthorization, $uri, array $options = array())
     {
-        return $this->send('post', $uri, $options);
+        return $this->send($needAuthorization, 'post', $uri, $options);
     }
 
-    protected function send($method, $uri, $options)
+    protected function send($needAuthorization, $method, $uri, $options)
     {
+        if ($needAuthorization) {
+            $options = array_merge(
+                $options,
+                array(
+                    'headers' => array(
+                        'Authorization' => $this->token,
+                    ),
+                )
+            );
+        }
+
         try {
             return new ClientResponse($this->client->{$method}($uri, $options));
         } catch (RequestException $e) {
