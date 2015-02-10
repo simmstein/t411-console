@@ -7,43 +7,47 @@ use GuzzleHttp\Exception\RequestException;
 
 class Client
 {
-    const API_HOST = 'https://api.t411.me/';
-
     protected $client;
 
     public function __construct()
     {
-        $this->client = new GuzzleClient();
+        $this->client = new GuzzleClient(array('base_url' => 'https://api.t411.me'));
     }
 
     public function getAuthorization($username, $password)
     {
-        return new ClientResponse($this->get(
-            'auth/',
+        return $this->post(
+            '/auth',
             array(
-                'username' => $username,
-                'password' => $password,
+                'body' => array(
+                    'username' => $username,
+                    'password' => $password,
+                ),
             )
         );
     }
 
+    public function getCategoriesTree()
+    {
+        return $this->get('/categories/tree');
+    }
+
     public function get($uri, array $options = array())
     {
-        try {
-            return new ClientResponse($this->client->get(API_HOST.$uri, $options));
-        } catch (RequestException $e) {
-            throw new ApiClientException(sprintf('Request exception (GET): %s', $e->getMessage()));
-        } catch (HttpConnectException $e) {
-            throw new ApiClientException(sprintf('HTTP Connection exception: %s', $e->getMessage()));
-        }
+        return $this->send('get', $uri, $options);
     }
 
     public function post($uri, array $options = array())
     {
+        return $this->send('post', $uri, $options);
+    }
+
+    protected function send($method, $uri, $options)
+    {
         try {
-            return new ClientResponse($this->client->post(API_HOST.$uri, $options));
+            return new ClientResponse($this->client->{$method}($uri, $options));
         } catch (RequestException $e) {
-            throw new ApiClientException(sprintf('Request exception (POST): %s', $e->getMessage()));
+            throw new ApiClientException(sprintf('Request exception (%s): %s', strtoupper($method), $e->getMessage()));
         } catch (HttpConnectException $e) {
             throw new ApiClientException(sprintf('HTTP Connection exception: %s', $e->getMessage()));
         }

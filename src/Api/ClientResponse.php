@@ -2,11 +2,13 @@
 
 namespace Api;
 
+use GuzzleHttp\Message\Response;
+
 class ClientResponse
 {
     protected $response = null;
 
-    public function __construct(FutureInterface $response)
+    public function __construct(Response $response)
     {
         $this->response = $response;
     }
@@ -18,7 +20,7 @@ class ClientResponse
 
     public function getErrorCode()
     {
-        if ($this->hasError()) {
+        if (!$this->hasError()) {
             return null;
         }
 
@@ -27,7 +29,7 @@ class ClientResponse
 
     public function getErrorMessage()
     {
-        if ($this->hasError()) {
+        if (!$this->hasError()) {
             return null;
         }
 
