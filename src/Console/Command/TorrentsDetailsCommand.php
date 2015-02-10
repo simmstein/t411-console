@@ -15,9 +15,13 @@ class TorrentsDetailsCommand extends Command
     {
         $this
             ->setName('torrents:details')
-            ->setDescription('Show torrent details')
-            ->addArgument('id', InputArgument::REQUIRED, 'Torrent id')
-            ->setHelp("The <info>%command.name%</info> show torrent details");
+            ->setDescription('Show a torrent details')
+            ->addArgument('id', InputArgument::REQUIRED, 'Torrent ID')
+            ->setHelp("<info>%command.name%</info>
+
+Show torrent details.
+
+Usage: <comment>torrents:details</comment> <info>TORRENT_ID</info>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

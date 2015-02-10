@@ -19,11 +19,18 @@ class TorrentsSearchCommand extends Command
             ->setName('torrents:search')
             ->setDescription('Search torrents')
             ->addArgument('query', InputArgument::REQUIRED, 'Query')
-            ->addOption('offset', 'o', InputOption::VALUE_OPTIONAL, 'Search offset')
-            ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Search limit')
-            ->addOption('category', 'c', InputOption::VALUE_OPTIONAL, 'Category')
-            ->addOption('terms', 't', InputOption::VALUE_OPTIONAL, 'Terms')
-            ->setHelp("The <info>%command.name%</info> search torrents");
+            ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Page number')
+            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of results per page')
+            ->addOption('sub-category', 's', InputOption::VALUE_REQUIRED, 'Filter by sub-category ID')
+            ->addOption('category', 'c', InputOption::VALUE_REQUIRED, 'Filter by category ID')
+            ->addOption('terms', 't', InputOption::VALUE_REQUIRED, 'Filter by terms IDs (separated by ",")')
+            ->setHelp("<info>%command.name%</info>
+
+Search torrents.
+
+Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
+
+<error>--terms does not work (API bug)</error>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,20 +47,59 @@ class TorrentsSearchCommand extends Command
         $client->setAuthorization($configLoader->getConfig()['auth']['token']);
 
         try {
-            $response = $client->searchTorrents(
-                $input->getArgument('query'),
-                array(
-                    'offset' => (int) $input->getOption('offset'),
-                    'limit' => (int) $input->getOption('limit'),
-                    'cat' => (int) $input->getOption('category'),
-                    'terms' => $this->convertTerms($input->getOption('terms'), $client->getTermsTree()->getData()),
-                )
-            );
+            $categoryId = (int) $input->getOption('category');
+            $termsTree = $client->getTermsTree();
 
-            return $this->showResults($response, $output);
+            /**
+             * API HACK
+             * Category filter does not work
+             */
+            if (!empty($categoryId)) {
+                $categoriesResponse = $client->getCategoriesTree();
+
+                if ($categoriesResponse->hasError()) {
+                    $output->writeln(sprintf(
+                        '<error>%s</error> <comment>(%d)</comment>',
+                        $response->getErrorMessage(),
+                        $response->getErrorCode()
+                    ));
+
+                    return;
+                }
+
+                foreach ($categoriesResponse->getData() as $category) {
+                    if (isset($category['id']) && (int) $category['id'] === $categoryId) {
+                        foreach (array_keys($category['cats']) as $cid) {
+                            $response = $this->searchTorrents($client, $input, $termsTree, $cid);
+
+                            $this->showResults($response, $output);
+                            $output->writeln('');
+                        }
+                    }
+                }
+
+                return;
+            }
+
+            $response = $this->searchTorrents($client, $input, $termsTree);
+
+            $this->showResults($response, $output);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
         }
+    }
+
+    protected function searchTorrents(Client $client, InputInterface $input, ClientResponse $termsTree, $cid = null)
+    {
+        return $client->searchTorrents(
+            $input->getArgument('query'),
+            array(
+                'offset' => (int) $input->getOption('offset'),
+                'limit' => (int) $input->getOption('limit'),
+                'cid' => $cid !== null ? $cid : (int) $input->getOption('sub-category'),
+                'terms' => $this->convertTerms($input->getOption('terms'), $termsTree->getData()),
+            )
+        );
     }
 
     public function convertTerms($value, array $termTypesTree)
@@ -100,9 +146,15 @@ class TorrentsSearchCommand extends Command
             return;
         }
 
+        $torrents = $response->getData()['torrents'];
+
+        if (empty($torrents)) {
+            return;
+        }
+
         $output->writeln(' SEED LEECH         ID NAME');
 
-        foreach ($response->getData()['torrents'] as $torrent) {
+        foreach ($torrents as $torrent) {
             $output->writeln(sprintf(
                 '[<info>%4d</info><comment>%6d</comment>] %9d %s',
                 $torrent['seeders'],

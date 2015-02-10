@@ -15,7 +15,13 @@ class AuthLoginCommand extends Command
         $this
             ->setName('auth:login')
             ->setDescription('Login on t411')
-            ->setHelp("The <info>%command.name%</info> ");
+            ->setHelp("<info>%command.name%</info>
+
+Generate the config to access the API. You must have a valid login/password.
+
+<comment>The login and the password are not saved.</comment>
+
+Usage: <comment>auth:login</comment>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

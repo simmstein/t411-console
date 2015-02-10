@@ -17,8 +17,14 @@ class TorrentsTopCommand extends Command
         $this
             ->setName('torrents:top')
             ->setDescription('Top torrents')
-            ->addOption('period', 'p', InputOption::VALUE_OPTIONAL, 'Period')
-            ->setHelp("The <info>%command.name%</info> show top torrents");
+            ->addOption('period', 'p', InputOption::VALUE_REQUIRED, 'Period')
+            ->setHelp("<info>%command.name%</info> 
+
+Show top torrents.
+
+Usage: <comment>torrents:search:top</comment> [OPTIONS]
+
+<info>Period values: \"100\", \"day\", \"week\", \"month\"</info>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

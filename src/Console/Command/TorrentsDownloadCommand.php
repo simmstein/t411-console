@@ -18,9 +18,15 @@ class TorrentsDownloadCommand extends Command
         $this
             ->setName('torrents:download')
             ->setDescription('Download a torrent')
-            ->addArgument('id', InputArgument::REQUIRED, 'Torrent id')
-            ->addArgument('output_file', InputArgument::REQUIRED, 'Output file')
-            ->setHelp("The <info>%command.name%</info> download torrent");
+            ->addArgument('id', InputArgument::REQUIRED, 'Torrent ID')
+            ->addArgument('output_file', InputArgument::REQUIRED, 'Output')
+            ->setHelp("<info>%command.name%</info> 
+
+Download a torrent.
+
+Usage: <comment>torrents:download</comment> <info>TORRENT_ID OUTPUT</info>
+
+<info>OUTPUT</info> could be a file or STDIN by using <info>-</info>.");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -14,8 +14,12 @@ class CategoriesTreeCommand extends Command
     {
         $this
             ->setName('categories:tree')
-            ->setDescription('Show categories')
-            ->setHelp("The <info>%command.name%</info> show the categories");
+            ->setDescription('Show categories and sub-categories')
+            ->setHelp("<info>%command.name%</info>
+			
+List all categories and sub-categories with IDs.
+
+Usage: <comment>categories:tree</comment>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

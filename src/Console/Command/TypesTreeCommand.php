@@ -18,7 +18,11 @@ class TypesTreeCommand extends Command
             ->setDescription('Show types')
             ->addOption('terms', 't', InputOption::VALUE_NONE, 'Show terms')
             ->addOption('filter', 'f', InputOption::VALUE_OPTIONAL, 'Filter types by ID or by name')
-            ->setHelp("The <info>%command.name%</info> show the terms");
+            ->setHelp("<info>%command.name%</info>
+			
+List all types of terms and terms.
+
+Usage: <comment>types:tree</comment> [OPTIONS]");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
