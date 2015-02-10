@@ -40,4 +40,9 @@ class ClientResponse
     {
         return $this->response->json();
     }
+
+    public function getBody()
+    {
+        return $this->response->getBody();
+    }
 }

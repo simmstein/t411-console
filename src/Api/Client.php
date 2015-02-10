@@ -45,6 +45,27 @@ class Client
         return $this->get(true, '/terms/tree');
     }
 
+    public function searchTorrents($query, $options)
+    {
+        $url = '/torrents/search/'.urlencode($query);
+        $query = array();
+
+        foreach (array('offset', 'limit') as $p) {
+            if (!empty($options[$p])) {
+                $query[$p] = $options[$p];
+            }
+        }
+
+        $url.= '?'.http_build_query($query);
+
+        return $this->get(true, $url);
+    }
+
+    public function downloadTorrent($id)
+    {
+        return $this->get(true, '/torrents/download/'.$id);
+    }
+
     public function get($needAuthorization, $uri, array $options = array())
     {
         return $this->send($needAuthorization, 'get', $uri, $options);
