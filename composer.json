@@ -1,4 +1,19 @@
 {
+    "name": "simmstein/t411-console",
+    "type": "project",
+    "description": "t411-console - searching torrents on the tracker t411.me",
+    "keywords": [],
+    "homepage": "http://www.deblan.tv/",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Simon Vieille",
+            "email": "simon+github@deblan.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.5"
+    },
     "autoload": {
         "psr-0": { 
             "": "src/"
