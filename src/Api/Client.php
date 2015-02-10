@@ -66,6 +66,11 @@ class Client
         return $this->get(true, '/torrents/download/'.$id);
     }
 
+    public function getTorrentDetails($id)
+    {
+        return $this->get(true, '/torrents/details/'.$id);
+    }
+
     public function get($needAuthorization, $uri, array $options = array())
     {
         return $this->send($needAuthorization, 'get', $uri, $options);
