@@ -4,7 +4,7 @@ t411-console provided a console line tool for searching torrents on the tracker 
 
 ## Installation
 
-PHP 5.3 is required
+PHP 5.5 is required
 
 ```bash
 $ git clone https://github.com/simmstein/t411-console.git
