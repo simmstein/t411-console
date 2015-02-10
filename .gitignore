@@ -1,0 +1,4 @@
+app/config.yml
+composer.lock
+tags
+*.swp
