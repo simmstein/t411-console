@@ -16,7 +16,7 @@ $ ./console
 
 ## Commands
 
-### console auth:login
+### Login on t411
 
 ```
 Usage:
@@ -42,7 +42,7 @@ Help:
 ```
 
 
-### console categories:tree
+### Show categories and sub-categories
 
 ```
 Usage:
@@ -66,7 +66,7 @@ Help:
 ```
 
 
-### console torrents:details
+### Show a torrent details
 
 ```
 Usage:
@@ -93,7 +93,7 @@ Help:
 ```
 
 
-### console torrents:download
+### Download a torrent
 
 ```
 Usage:
@@ -123,7 +123,7 @@ Help:
 ```
 
 
-### console torrents:search
+### Search torrents
 
 ```
 Usage:
@@ -157,7 +157,7 @@ Help:
 ```
 
 
-### console torrents:search:movies
+### Search movies
 
 ```
 Usage:
@@ -189,7 +189,7 @@ Help:
 ```
 
 
-### console torrents:search:series
+### Search series
 
 ```
 Usage:
@@ -221,7 +221,7 @@ Help:
 ```
 
 
-### console torrents:top
+### Top torrents
 
 ```
 Usage:
@@ -248,7 +248,7 @@ Help:
 ```
 
 
-### console types:tree
+### Show types and terms
 
 ```
 Usage:

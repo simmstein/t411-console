@@ -24,7 +24,7 @@ Show top torrents.
 
 Usage: <comment>torrents:search:top</comment> [OPTIONS]
 
-<info>Period values: \"100\", \"day\", \"week\", \"month\"</info>");
+<info>Period values: \"100\" (default), \"day\", \"week\", \"month\"</info>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
