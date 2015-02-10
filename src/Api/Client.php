@@ -50,10 +50,14 @@ class Client
         $url = '/torrents/search/'.urlencode($query);
         $query = array();
 
-        foreach (array('offset', 'limit') as $p) {
+        foreach (array('offset', 'limit', 'cat') as $p) {
             if (!empty($options[$p])) {
                 $query[$p] = $options[$p];
             }
+        }
+
+        if (!empty($options['terms'])) {
+            $query['terms'] = $options['terms'];
         }
 
         $url.= '?'.http_build_query($query);

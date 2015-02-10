@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Api\Client;
 use Api\ConfigLoader;
+use Api\ClientResponse;
 
 class TorrentsSearchCommand extends Command
 {
@@ -18,11 +19,10 @@ class TorrentsSearchCommand extends Command
             ->setName('torrents:search')
             ->setDescription('Search torrents')
             ->addArgument('query', InputArgument::REQUIRED, 'Query')
-            ->addOption('offset', null, InputOption::VALUE_OPTIONAL, 'Search offset')
-            ->addOption('limit', null, InputOption::VALUE_OPTIONAL, 'Search limit')
-            ->addOption('category', null, InputOption::VALUE_OPTIONAL, 'Category')
-            ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Type')
-            ->addOption('term', null, InputOption::VALUE_OPTIONAL, 'Term')
+            ->addOption('offset', 'o', InputOption::VALUE_OPTIONAL, 'Search offset')
+            ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Search limit')
+            ->addOption('category', 'c', InputOption::VALUE_OPTIONAL, 'Category')
+            ->addOption('terms', 't', InputOption::VALUE_OPTIONAL, 'Terms')
             ->setHelp("The <info>%command.name%</info> search torrents");
     }
 
@@ -45,35 +45,71 @@ class TorrentsSearchCommand extends Command
                 array(
                     'offset' => (int) $input->getOption('offset'),
                     'limit' => (int) $input->getOption('limit'),
-                    'category' => $input->getOption('category'),
-                    'type' => $input->getOption('type'),
-                    'term' => $input->getOption('term'),
+                    'cat' => (int) $input->getOption('category'),
+                    'terms' => $this->convertTerms($input->getOption('terms'), $client->getTermsTree()->getData()),
                 )
             );
 
-            if ($response->hasError()) {
-                $output->writeln(sprintf(
-                    '<error>%s</error> <comment>(%d)</comment>',
-                    $response->getErrorMessage(),
-                    $response->getErrorCode()
-                ));
-
-                return;
-            }
-
-            $output->writeln('                  ID NAME');
-
-            foreach ($response->getData()['torrents'] as $torrent) {
-                $output->writeln(sprintf(
-                    '[<info>%4d</info><comment>%4d</comment>] %9d %s',
-                    $torrent['seeders'],
-                    $torrent['leechers'],
-                    $torrent['id'],
-                    $torrent['name']
-                ));
-            }
+            return $this->showResults($response, $output);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
+        }
+    }
+
+    public function convertTerms($value, array $termTypesTree)
+    {
+        $value = trim($value);
+
+        $terms = array_map(
+            function ($v) {
+                return (int) trim($v);
+            },
+            explode(',', $value)
+        );
+
+        $finalTerms = array();
+
+        foreach ($termTypesTree as $termTypes) {
+            foreach ($termTypes as $termTypeId => $termType) {
+                foreach ($terms as $term) {
+                    if (isset($termType['terms'][$term])) {
+                        if (!isset($finalTerms[$termTypeId])) {
+                            $finalTerms[$termTypeId] = array();
+                        }
+
+                        if (!in_array($term, $finalTerms[$termTypeId])) {
+                            $finalTerms[$termTypeId][] = $term;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $finalTerms;
+    }
+
+    protected function showResults(ClientResponse $response, OutputInterface $output)
+    {
+        if ($response->hasError()) {
+            $output->writeln(sprintf(
+                '<error>%s</error> <comment>(%d)</comment>',
+                $response->getErrorMessage(),
+                $response->getErrorCode()
+            ));
+
+            return;
+        }
+
+        $output->writeln(' SEED LEECH         ID NAME');
+
+        foreach ($response->getData()['torrents'] as $torrent) {
+            $output->writeln(sprintf(
+                '[<info>%4d</info><comment>%6d</comment>] %9d %s',
+                $torrent['seeders'],
+                $torrent['leechers'],
+                $torrent['id'],
+                $torrent['name']
+            ));
         }
     }
 }

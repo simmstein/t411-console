@@ -45,17 +45,23 @@ class CategoriesTreeCommand extends Command
             }
 
             foreach ($response->getData() as $category) {
-                if (isset($category['name'])) {
-                    $output->writeln(sprintf('`- %s', $category['name']));
+                if (!isset($category['name'])) {
+                    $category['name'] = 'Category name not defined';
                 }
+
+                $output->writeln(sprintf('<comment>%3d</comment> <info>%s</info>', isset($category['id']) ? $category['id'] : null, $category['name']));
 
                 if (!empty($category['cats'])) {
                     $isFirst = true;
 
-                    foreach ($category['cats'] as $subCategory) {
-                        if (isset($subCategory['name'])) {
-                            $output->writeln(sprintf('   |- %s', $subCategory['name']));
+                    foreach ($category['cats'] as $subCategoryId => $subCategory) {
+                        $char = '|';
+                        if ($isFirst) {
+                            $isFirst = false;
+                            $char = '`';
                         }
+
+                        $output->writeln(sprintf('   %s- <comment>%4d</comment> %s', $char, $subCategoryId, $subCategory['name']));
                     }
                 }
 
