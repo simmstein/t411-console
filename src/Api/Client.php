@@ -92,9 +92,9 @@ class Client
         try {
             return new ClientResponse($this->client->{$method}($uri, $options));
         } catch (RequestException $e) {
-            throw new ApiClientException(sprintf('Request exception (%s): %s', strtoupper($method), $e->getMessage()));
+            throw new ClientException(sprintf('Request exception (%s): %s', strtoupper($method), $e->getMessage()));
         } catch (HttpConnectException $e) {
-            throw new ApiClientException(sprintf('HTTP Connection exception: %s', $e->getMessage()));
+            throw new ClientException(sprintf('HTTP Connection exception: %s', $e->getMessage()));
         }
     }
 }
