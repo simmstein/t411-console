@@ -1,0 +1,4 @@
+# use the command "auth:login" to edit this file
+auth:
+    uid: 'XXXXX'
+    token: 'XXXXXXXX'
