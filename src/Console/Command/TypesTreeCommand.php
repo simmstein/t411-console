@@ -17,7 +17,7 @@ class TypesTreeCommand extends Command
             ->setName('types:tree')
             ->setDescription('Show types and terms')
             ->addOption('terms', 't', InputOption::VALUE_NONE, 'Show terms')
-            ->addOption('filter', 'f', InputOption::VALUE_OPTIONAL, 'Filter types by ID or by name')
+            ->addOption('filter', 'f', InputOption::VALUE_REQUIRED, 'Filter types by ID or by name')
             ->setHelp("<info>%command.name%</info>
 			
 List all types of terms and terms.

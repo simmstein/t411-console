@@ -80,6 +80,11 @@ class Client
         return $this->get(true, '/torrents/top/'.$period);
     }
 
+    public function getUserProfile($id)
+    {
+        return $this->get(true, '/users/profile/'.$id);
+    }
+
     public function get($needAuthorization, $uri, array $options = array())
     {
         return $this->send($needAuthorization, 'get', $uri, $options);
