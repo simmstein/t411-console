@@ -38,7 +38,7 @@ Help:
  Show the profile of a user (default: auhentificated user). 
  
  Usage: users:profile [OPTIONS]
-``
+```
 
 ### Login on t411
 
