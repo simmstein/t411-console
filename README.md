@@ -35,7 +35,7 @@ Options:
 Help:
  users:profile
  
- Show the profile of a user (default: auhentificated user). 
+ Show a user's profile (default: auhentificated user). 
  
  Usage: users:profile [OPTIONS]
 ```
