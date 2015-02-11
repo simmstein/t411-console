@@ -15,9 +15,12 @@ class UsersProfileCommand extends Command
     {
         $this
             ->setName('users:profile')
-            ->setDescription('')
-            ->addOption('id', 'i', InputOption::VALUE_REQUIRED, '')
+            ->setDescription('Show a user\'s profile')
+            ->addOption('id', 'i', InputOption::VALUE_REQUIRED, 'The user id')
             ->setHelp("<info>%command.name%</info>
+
+Show a user's profile (default is the auhentificated user). 
+
 Usage: <comment>users:profile</comment> [OPTIONS]");
     }
 

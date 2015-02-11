@@ -16,6 +16,30 @@ $ ./console
 
 ## Commands
 
+### Show a user's profile
+
+```
+Usage:
+ users:profile [-i|--id="..."]
+
+Options:
+ --id (-i)             The user id
+ --help (-h)           Display this help message
+ --quiet (-q)          Do not output any message
+ --verbose (-v|vv|vvv) Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+ --version (-V)        Display this application version
+ --ansi                Force ANSI output
+ --no-ansi             Disable ANSI output
+ --no-interaction (-n) Do not ask any interactive question
+
+Help:
+ users:profile
+ 
+ Show the profile of a user (default: auhentificated user). 
+ 
+ Usage: users:profile [OPTIONS]
+``
+
 ### Login on t411
 
 ```
