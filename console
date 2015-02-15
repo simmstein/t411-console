@@ -6,4 +6,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Console\Application;
 
 $app = new Application();
-$app->run();
+
+$app
+	->chdir(__DIR__)
+	->loadCommands()
+	->run();

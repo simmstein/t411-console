@@ -11,21 +11,21 @@ class Application extends BaseApplication
         'src/Console/Command' => 'Console\\Command',
     );
 
-    public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
-    {
-        parent::__construct($name, $version);
-
-        $this->loadCommands();
-    }
-
     public function addCommandsPath($path, $namespace)
     {
-        $this->commandsPaths[$path] = trim($namespace, '/');
+        $this->commandsPaths[$path] = trim($namespace, '\\');
 
         return $this;
     }
 
-    protected function loadCommands()
+    public function chdir($directory)
+    {
+        chdir($directory);
+
+        return $this;
+    }
+
+    public function loadCommands()
     {
         $finder = new Finder();
 
@@ -39,5 +39,7 @@ class Application extends BaseApplication
                 ));
             }
         }
+
+        return $this;
     }
 }
