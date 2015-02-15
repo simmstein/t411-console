@@ -9,5 +9,6 @@ $app = new Application();
 
 $app
     ->chdir(__DIR__)
+	->addCommandsPath('src/Transmission/Command', 'Transmission\\Command')
     ->loadCommands()
     ->run();

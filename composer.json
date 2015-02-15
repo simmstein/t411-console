@@ -11,21 +11,20 @@
             "email": "simon+github@deblan.fr"
         }
     ],
-    "require": {
-        "php": ">=5.5",
-        "symfony/process": "~2.6"
-    },
     "autoload": {
         "psr-0": { 
             "": "src/"
         }
     },
     "require": {
+        "php": ">=5.5",
+        "symfony/process": "~2.6",
         "symfony/console": "2.*",
         "psr/log": "1.0.0",
         "symfony/finder": "~2.6",
         "symfony/yaml": "~2.6",
         "symfony/filesystem": "3.0.x-dev",
-        "guzzlehttp/guzzle": "~5.2"
+        "guzzlehttp/guzzle": "~5.2",
+        "vohof/transmission": "~1.0"
     }
 }
