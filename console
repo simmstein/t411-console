@@ -8,6 +8,6 @@ use Console\Application;
 $app = new Application();
 
 $app
-	->chdir(__DIR__)
-	->loadCommands()
-	->run();
+    ->chdir(__DIR__)
+    ->loadCommands()
+    ->run();
