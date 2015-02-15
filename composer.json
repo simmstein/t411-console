@@ -11,16 +11,14 @@
             "email": "simon+github@deblan.fr"
         }
     ],
-    "require": {
-        "php": ">=5.5",
-        "symfony/process": "~2.6"
-    },
     "autoload": {
         "psr-0": { 
             "": "src/"
         }
     },
     "require": {
+        "php": ">=5.5",
+        "symfony/process": "~2.6",
         "symfony/console": "2.*",
         "psr/log": "1.0.0",
         "symfony/finder": "~2.6",
