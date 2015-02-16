@@ -29,7 +29,7 @@ class Application extends BaseApplication
     {
         foreach ($this->commandsPaths as $path => $namespace) {
 			$finder = new Finder();
-            $finder->files('*Command.php')->in($path);
+            $finder->name('*Command.php')->in($path);
 
             foreach ($finder as $file) {
                 $className = $namespace.'\\'.str_replace('.php', '', $file->getFilename());

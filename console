@@ -7,7 +7,6 @@ use Console\Application;
 
 $app = new Application();
 
-$app
-    ->chdir(__DIR__)
-    ->loadCommands()
-    ->run();
+$app->chdir(__DIR__);
+$app->loadCommands();
+$app->run();
