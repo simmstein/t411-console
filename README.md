@@ -297,4 +297,54 @@ Help:
  Usage: types:tree [OPTIONS]
 ```
 
+### Configure transmission web remote access
+
+```
+Usage:
+ transmission:configure
+
+Options:
+ --help (-h)           Display this help message
+ --quiet (-q)          Do not output any message
+ --verbose (-v|vv|vvv) Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+ --version (-V)        Display this application version
+ --ansi                Force ANSI output
+ --no-ansi             Disable ANSI output
+ --no-interaction (-n) Do not ask any interactive question
+
+Help:
+ transmission:configure
+ 
+ Configure your transmission web remote access.
+ 
+ Usage: transmission:configure
+```
+
+### Download a torrent with transmission web remote client
+
+```
+Usage:
+ transmission:download id
+
+Arguments:
+ id                    Torrent ID
+
+Options:
+ --help (-h)           Display this help message
+ --quiet (-q)          Do not output any message
+ --verbose (-v|vv|vvv) Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+ --version (-V)        Display this application version
+ --ansi                Force ANSI output
+ --no-ansi             Disable ANSI output
+ --no-interaction (-n) Do not ask any interactive question
+
+Help:
+ transmission:download
+ 
+ Download a torrent.
+ 
+ Usage: transmission:download TORRENT_ID
+
+```
+
 
