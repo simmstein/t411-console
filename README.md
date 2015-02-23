@@ -2,6 +2,8 @@
 
 t411-console provided a console line tool for searching torrents on the tracker t411.me.
 
+You also can configure a transmission remote access and run a download.
+
 ## Installation
 
 PHP 5.5 is required
