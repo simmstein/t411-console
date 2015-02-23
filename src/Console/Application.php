@@ -28,7 +28,7 @@ class Application extends BaseApplication
     public function loadCommands()
     {
         foreach ($this->commandsPaths as $path => $namespace) {
-			$finder = new Finder();
+            $finder = new Finder();
             $finder->name('*Command.php')->in($path);
 
             foreach ($finder as $file) {

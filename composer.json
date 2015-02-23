@@ -24,6 +24,7 @@
         "symfony/finder": "~2.6",
         "symfony/yaml": "~2.6",
         "symfony/filesystem": "3.0.x-dev",
-        "guzzlehttp/guzzle": "~5.2"
+        "guzzlehttp/guzzle": "~5.2",
+        "vohof/transmission": "~1.0"
     }
 }
