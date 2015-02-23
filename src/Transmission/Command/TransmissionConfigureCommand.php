@@ -18,7 +18,11 @@ class TransmissionConfigureCommand extends Command
             ->setDescription('')
             // ->addArgument('foo', InputArgument::OPTIONAL, '')
             // ->addOption('bar', null, InputOption::VALUE_NONE, '')
-            ->setHelp("The <info>%command.name%</info> ");
+            ->setHelp("<info>%command.name%</info>
+
+Configure your transmission web remote access.
+
+Usage: <comment>transmission:configure</comment>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
