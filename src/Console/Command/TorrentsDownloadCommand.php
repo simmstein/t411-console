@@ -10,6 +10,7 @@ use Api\Client;
 use Api\ConfigLoader;
 use GuzzleHttp\Exception\ParseException;
 use Symfony\Component\Filesystem\Filesystem;
+use Api\ClientException;
 
 class TorrentsDownloadCommand extends Command
 {

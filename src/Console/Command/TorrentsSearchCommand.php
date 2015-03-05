@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Api\Client;
 use Api\ConfigLoader;
 use Api\ClientResponse;
+use Api\ClientException;
 
 class TorrentsSearchCommand extends Command
 {

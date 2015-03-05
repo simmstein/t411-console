@@ -112,8 +112,8 @@ class Client
             return new ClientResponse($this->client->{$method}($uri, $options));
         } catch (RequestException $e) {
             throw new ClientException(sprintf('Request exception (%s): %s', strtoupper($method), $e->getMessage()));
-        } catch (HttpConnectException $e) {
-            throw new ClientException(sprintf('HTTP Connection exception: %s', $e->getMessage()));
+        } catch (\Exception $e) {
+            throw new ClientException(sprintf('Exception: %s', $e->getMessage()));
         }
     }
 }

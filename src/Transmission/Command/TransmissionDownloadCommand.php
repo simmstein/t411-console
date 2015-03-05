@@ -49,7 +49,7 @@ Usage: <comment>transmission:download</comment> <info>TORRENT_ID</info>");
 
         $options = [];
 
-        if (!empty($config['username']) and !empty($config['password'])) {
+        if (!empty($config['username']) && !empty($config['password'])) {
             $options = array(
                 'request.options' => array(
                     'auth' => array($config['username'], $config['password'])
@@ -66,7 +66,7 @@ Usage: <comment>transmission:download</comment> <info>TORRENT_ID</info>");
 
             $content = base64_encode(file_get_contents($outputFile));
 
-            $torrent = $transmission->add($content, true);
+            $transmission->add($content, true);
         } catch (\Exception $e) {
             unlink($outputFile);
 

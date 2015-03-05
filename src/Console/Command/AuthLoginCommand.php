@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Api\ConfigLoader;
 use Api\Client;
+use Api\ClientException;
 
 class AuthLoginCommand extends Command
 {

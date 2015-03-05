@@ -8,6 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Api\Client;
 use Api\ConfigLoader;
 use Symfony\Component\Console\Input\InputOption;
+use Api\ClientException;
 
 class TypesTreeCommand extends Command
 {

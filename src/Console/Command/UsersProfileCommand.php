@@ -8,6 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Api\Client;
 use Api\ConfigLoader;
 use Symfony\Component\Console\Input\InputOption;
+use Api\ClientException;
 
 class UsersProfileCommand extends Command
 {
@@ -91,6 +92,6 @@ Usage: <comment>users:profile</comment> [OPTIONS]");
         $sizes = 'BKMGTP';
         $factor = floor((strlen($bytes) - 1) / 3);
 
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sizes[$factor];
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).$sizes[$factor];
     }
 }

@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command;
 use Api\Client;
 use Api\ConfigLoader;
+use Api\ClientException;
 
 class TorrentsDetailsCommand extends Command
 {
