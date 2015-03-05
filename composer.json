@@ -4,7 +4,7 @@
     "description": "t411-console - searching torrents on the tracker t411.me",
     "keywords": [],
     "homepage": "http://www.deblan.tv/",
-    "license": "BSD",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Simon Vieille",
