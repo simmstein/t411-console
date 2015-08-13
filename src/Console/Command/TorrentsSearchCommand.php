@@ -153,16 +153,25 @@ Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
             return;
         }
 
-        $output->writeln(' SEED LEECH         ID NAME');
+        $output->writeln(' SEED LEECH   SIZE      ID      NAME');
 
         foreach ($torrents as $torrent) {
             $output->writeln(sprintf(
-                '[<info>%4d</info><comment>%6d</comment>] %9d %s',
+                '[<info>%4d</info><comment>%6d</comment>] [%8s] %7d %s',
                 $torrent['seeders'],
                 $torrent['leechers'],
+                $this->formatBytes((int) $torrent['size']),
                 $torrent['id'],
                 $torrent['name']
             ));
         }
+    }
+
+    protected function formatBytes($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'k', 'M', 'G', 'T');
+
+        return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
 }
