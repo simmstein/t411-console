@@ -1,8 +1,10 @@
 # t411-console
 
-t411-console provided a console line tool for searching torrents on the tracker t411.me.
+t411-console provides a console line tool for searching torrents on the tracker t411.me.
 
 You also can configure a transmission remote access and run a download.
+
+![t411-console](https://upload.deblan.org/u/2015-08/55cf6b3b.jpg "t411-console")
 
 ## Installation
 
@@ -352,7 +354,6 @@ Help:
 ### UserScript
 
 ![UserScript](https://upload.deblan.org/u/2015-08/55cf6a91.png "UserScript")
-
 
 ```
 // ==UserScript==
