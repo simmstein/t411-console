@@ -170,7 +170,7 @@ Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
     protected function formatBytes($size, $precision = 2)
     {
         $base = log($size, 1024);
-        $suffixes = array('', 'k', 'M', 'G', 'T');
+        $suffixes = array('', 'kB', 'MB', 'GB', 'TB');
 
         return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }

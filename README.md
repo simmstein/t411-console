@@ -349,4 +349,27 @@ Help:
 
 ```
 
+### UserScript
 
+![UserScript](https://upload.deblan.org/u/2015-08/55cf69d1.png "UserScript")
+
+
+```
+// ==UserScript==
+// @name        Tranmission cli cmd
+// @namespace   t411
+// @include     http*://www.t411.io/torrents/*
+// @version     1
+// @grant       none
+// ==/UserScript==
+
+$('.btn').each(function() {
+	var $btn = $(this);
+	var $parent = $btn.parent();
+
+	if ($btn.attr('href').indexOf('download') !== -1) {
+		var id = $btn.attr('href').split('=')[1];
+		$parent.append('<p>t411-console transmission:download ' + id + '</p>');
+	}
+});
+```
