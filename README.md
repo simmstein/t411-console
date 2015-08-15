@@ -351,7 +351,7 @@ Help:
 
 ### UserScript
 
-![UserScript](https://upload.deblan.org/u/2015-08/55cf69d1.png "UserScript")
+![UserScript](https://upload.deblan.org/u/2015-08/55cf6a91.png "UserScript")
 
 
 ```
