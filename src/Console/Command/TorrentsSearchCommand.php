@@ -11,6 +11,7 @@ use Api\Client;
 use Api\ConfigLoader;
 use Api\ClientResponse;
 use Api\ClientException;
+use Helper\Formater;
 
 class TorrentsSearchCommand extends Command
 {
@@ -160,18 +161,10 @@ Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
                 '[<info>%4d</info><comment>%6d</comment>] [%8s] %7d %s',
                 $torrent['seeders'],
                 $torrent['leechers'],
-                $this->formatBytes((int) $torrent['size']),
+                Formater::humanSize((int) $torrent['size']),
                 $torrent['id'],
                 $torrent['name']
             ));
         }
-    }
-
-    protected function formatBytes($size, $precision = 2)
-    {
-        $base = log($size, 1024);
-        $suffixes = array('', 'kB', 'MB', 'GB', 'TB');
-
-        return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
 }

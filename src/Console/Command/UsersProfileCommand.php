@@ -9,6 +9,7 @@ use Api\Client;
 use Api\ConfigLoader;
 use Symfony\Component\Console\Input\InputOption;
 use Api\ClientException;
+use Helper\Formater;
 
 class UsersProfileCommand extends Command
 {
@@ -74,8 +75,8 @@ Usage: <comment>users:profile</comment> [OPTIONS]");
 
                 $output->writeln(sprintf(
                     'DOWN <comment>%sB</comment> UP <comment>%sB</comment> RATIO %s',
-                    $this->getHumainSize($data['downloaded']),
-                    $this->getHumainSize($data['uploaded']),
+                    Formater::humanSize((int) $data['downloaded']),
+                    Formater::humanSize((int) $data['uploaded']),
                     sprintf(
                         $ratio > 1 ? '<info>%.2f</info>' : '<error>%.2f</error>',
                         $ratio
@@ -85,13 +86,5 @@ Usage: <comment>users:profile</comment> [OPTIONS]");
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
         }
-    }
-
-    protected function getHumainSize($bytes, $decimals = 2)
-    {
-        $sizes = 'BKMGTP';
-        $factor = floor((strlen($bytes) - 1) / 3);
-
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).$sizes[$factor];
     }
 }

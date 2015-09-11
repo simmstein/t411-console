@@ -55,7 +55,7 @@ Usage: <comment>torrents:details</comment> <info>TORRENT_ID</info>");
 
             $output->writeln(sprintf('<info>%s</info>', $data['name']));
             $output->writeln('');
-            $output->writeln(sprintf('Category        : <comment>%s</comment>', $data['categoryname']));
+            $output->writeln(sprintf('Category       : <comment>%s</comment>', $data['categoryname']));
 
             foreach ($data['terms'] as $title => $value) {
                 $output->writeln(sprintf('%-16s: <comment>%s</comment>', $title, $value));
