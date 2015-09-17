@@ -1,5 +1,6 @@
 # t411-console
 
+
 t411-console provides a console line tool for searching torrents on the tracker t411.me.
 
 You also can configure a transmission remote access and run a download.
@@ -17,6 +18,8 @@ $ curl -sS https://getcomposer.org/installer | php
 $ ./composer.phar install
 $ ./console
 ```
+
+If you have an error like `"Fatal error: Call to undefined function Symfony\Component\Yaml\ctype_digit() in /mnt/Apps/t411-console/vendor/symfony/yaml/Inline.php on line 124`, install the missing php module (eg: `php5-ctype`).
 
 ## Commands
 
