@@ -12,6 +12,7 @@ use Api\ConfigLoader;
 use Api\ClientResponse;
 use Api\ClientException;
 use Helper\Formater;
+use Helper\Render;
 
 class TorrentsSearchCommand extends Command
 {
@@ -84,8 +85,18 @@ Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
             }
 
             $response = $this->searchTorrents($client, $input, $termsTree);
+            
+            if ($response->hasError()) {
+                $output->writeln(sprintf(
+                    '<error>%s</error> <comment>(%d)</comment>',
+                    $response->getErrorMessage(),
+                    $response->getErrorCode()
+                ));
 
-            $this->showResults($response, $output);
+                return;
+            }
+
+            Render::torrents($response->getData()['torrents'], $output);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
         }

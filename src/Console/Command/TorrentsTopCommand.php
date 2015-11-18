@@ -10,6 +10,7 @@ use Api\Client;
 use Api\ConfigLoader;
 use Api\ClientResponse;
 use Api\ClientException;
+use Helper\Render;
 
 class TorrentsTopCommand extends Command
 {
@@ -49,35 +50,20 @@ Usage: <comment>torrents:search:top</comment> [OPTIONS]
             }
 
             $response = $client->getTopTorrents($period);
+            
+            if ($response->hasError()) {
+                $output->writeln(sprintf(
+                    '<error>%s</error> <comment>(%d)</comment>',
+                    $response->getErrorMessage(),
+                    $response->getErrorCode()
+                ));
 
-            return $this->showResults($response, $output);
+                return;
+            }
+
+            Render::torrents($response->getData(), $output);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
-        }
-    }
-
-    protected function showResults(ClientResponse $response, OutputInterface $output)
-    {
-        if ($response->hasError()) {
-            $output->writeln(sprintf(
-                '<error>%s</error> <comment>(%d)</comment>',
-                $response->getErrorMessage(),
-                $response->getErrorCode()
-            ));
-
-            return;
-        }
-
-        $output->writeln(' SEED LEECH         ID NAME');
-
-        foreach ($response->getData() as $torrent) {
-            $output->writeln(sprintf(
-                '[<info>%4d</info><comment>%6d</comment>] %9d %s',
-                $torrent['seeders'],
-                $torrent['leechers'],
-                $torrent['id'],
-                $torrent['name']
-            ));
         }
     }
 }
