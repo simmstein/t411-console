@@ -10,6 +10,7 @@ use Api\Client;
 use Api\ConfigLoader;
 use Api\ClientResponse;
 use Api\ClientException;
+use Helper\Render;
 
 class TorrentsTopCommand extends Command
 {
@@ -19,13 +20,17 @@ class TorrentsTopCommand extends Command
             ->setName('torrents:top')
             ->setDescription('Top torrents')
             ->addOption('period', 'p', InputOption::VALUE_REQUIRED, 'Period')
+            ->addOption('sort', null, InputOption::VALUE_REQUIRED, 'Sort')
+            ->addOption('asc', null, InputOption::VALUE_NONE, 'Ascending sort')
             ->setHelp("<info>%command.name%</info> 
 
 Show top torrents.
 
 Usage: <comment>torrents:search:top</comment> [OPTIONS]
 
-<info>Period values: \"100\" (default), \"day\", \"week\", \"month\"</info>");
+<info>Period values</info> \"100\" (default), \"day\", \"week\", \"month\"
+<info>Sort values</info>   \"seed\", \"leech\", \"size\", \"name\", \"id\"
+");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,35 +54,30 @@ Usage: <comment>torrents:search:top</comment> [OPTIONS]
             }
 
             $response = $client->getTopTorrents($period);
+            
+            if ($response->hasError()) {
+                $output->writeln(sprintf(
+                    '<error>%s</error> <comment>(%d)</comment>',
+                    $response->getErrorMessage(),
+                    $response->getErrorCode()
+                ));
 
-            return $this->showResults($response, $output);
+                return;
+            }
+
+            $options = [];
+            
+            if ($input->getOption('sort')) {
+                $options['sort'] = $input->getOption('sort');
+            }
+            
+            if ($input->getOption('asc')) {
+                $options['asc'] = true;
+            }
+
+            Render::torrents($response->getData(), $output, $options);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
-        }
-    }
-
-    protected function showResults(ClientResponse $response, OutputInterface $output)
-    {
-        if ($response->hasError()) {
-            $output->writeln(sprintf(
-                '<error>%s</error> <comment>(%d)</comment>',
-                $response->getErrorMessage(),
-                $response->getErrorCode()
-            ));
-
-            return;
-        }
-
-        $output->writeln(' SEED LEECH         ID NAME');
-
-        foreach ($response->getData() as $torrent) {
-            $output->writeln(sprintf(
-                '[<info>%4d</info><comment>%6d</comment>] %9d %s',
-                $torrent['seeders'],
-                $torrent['leechers'],
-                $torrent['id'],
-                $torrent['name']
-            ));
         }
     }
 }

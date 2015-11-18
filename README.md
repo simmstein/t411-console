@@ -182,6 +182,8 @@ Help:
  Search torrents.
  
  Usage: torrents:search QUERY [OPTIONS]
+
+ Sort values   \"seed\", \"leech\", \"size\", \"name\", \"id\"
  
  --terms does not work (API bug)
 ```
@@ -274,7 +276,8 @@ Help:
  
  Usage: torrents:search:top [OPTIONS]
  
- Period values: "100", "day", "week", "month"
+ Period values \"100\" (default), \"day\", \"week\", \"month\"
+ Sort values   \"seed\", \"leech\", \"size\", \"name\", \"id\"
 ```
 
 
