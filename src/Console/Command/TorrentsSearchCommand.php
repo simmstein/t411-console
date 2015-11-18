@@ -27,11 +27,15 @@ class TorrentsSearchCommand extends Command
             ->addOption('sub-category', 's', InputOption::VALUE_REQUIRED, 'Filter by sub-category ID')
             ->addOption('category', 'c', InputOption::VALUE_REQUIRED, 'Filter by category ID')
             ->addOption('terms', 't', InputOption::VALUE_REQUIRED, 'Filter by terms IDs (separated by ",")')
+            ->addOption('sort', null, InputOption::VALUE_REQUIRED, 'Sort')
+            ->addOption('asc', null, InputOption::VALUE_NONE, 'Ascending sort')
             ->setHelp("<info>%command.name%</info>
 
 Search torrents.
 
 Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
+
+<info>Sort values</info>   \"seed\", \"leech\", \"size\", \"name\", \"id\"
 
 <error>--terms does not work (API bug)</error>");
     }
@@ -95,8 +99,18 @@ Usage: <comment>torrents:search</comment> <info>QUERY</info> [OPTIONS]
 
                 return;
             }
+            
+            $options = [];
+            
+            if ($input->getOption('sort')) {
+                $options['sort'] = $input->getOption('sort');
+            }
+            
+            if ($input->getOption('asc')) {
+                $options['asc'] = true;
+            }
 
-            Render::torrents($response->getData()['torrents'], $output);
+            Render::torrents($response->getData()['torrents'], $output, $options);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
         }

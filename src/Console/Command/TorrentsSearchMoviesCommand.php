@@ -20,6 +20,8 @@ class TorrentsSearchMoviesCommand extends Command
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Page number')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of results per page')
             ->addOption('terms', 't', InputOption::VALUE_REQUIRED, 'Filter by terms IDs (separated by ",")')
+            ->addOption('sort', null, InputOption::VALUE_REQUIRED, 'Sort')
+            ->addOption('asc', null, InputOption::VALUE_NONE, 'Ascending sort')
             ->setHelp("<info>%command.name%</info> 
 			
 Search movies.
@@ -37,7 +39,7 @@ Usage: <comment>torrents:search:movies</comment> <info>QUERY</info> [OPTIONS]
             '--sub-category' => 631,
         );
 
-        foreach (['offset', 'limit', 'terms'] as $p) {
+        foreach (['offset', 'limit', 'terms', 'sort', 'asc'] as $p) {
             $value = $input->getOption($p);
 
             if (null !== $value) {

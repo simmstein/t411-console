@@ -20,13 +20,17 @@ class TorrentsTopCommand extends Command
             ->setName('torrents:top')
             ->setDescription('Top torrents')
             ->addOption('period', 'p', InputOption::VALUE_REQUIRED, 'Period')
+            ->addOption('sort', null, InputOption::VALUE_REQUIRED, 'Sort')
+            ->addOption('asc', null, InputOption::VALUE_NONE, 'Ascending sort')
             ->setHelp("<info>%command.name%</info> 
 
 Show top torrents.
 
 Usage: <comment>torrents:search:top</comment> [OPTIONS]
 
-<info>Period values: \"100\" (default), \"day\", \"week\", \"month\"</info>");
+<info>Period values</info> \"100\" (default), \"day\", \"week\", \"month\"
+<info>Sort values</info>   \"seed\", \"leech\", \"size\", \"name\", \"id\"
+");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -61,7 +65,17 @@ Usage: <comment>torrents:search:top</comment> [OPTIONS]
                 return;
             }
 
-            Render::torrents($response->getData(), $output);
+            $options = [];
+            
+            if ($input->getOption('sort')) {
+                $options['sort'] = $input->getOption('sort');
+            }
+            
+            if ($input->getOption('asc')) {
+                $options['asc'] = true;
+            }
+
+            Render::torrents($response->getData(), $output, $options);
         } catch (ClientException $e) {
             $output->writeln(sprintf('An error occured. <error>%s</error>', $e->getMessage()));
         }
