@@ -10,20 +10,20 @@ use Api\ConfigLoader;
 use Symfony\Component\Console\Input\ArrayInput;
 use Vohof\Transmission;
 use Transmission\Client\GuzzleClient;
+use Helper\Formater;
 
-class TransmissionDownloadCommand extends Command
+class TransmissionStatsCommand extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('transmission:download')
-            ->setDescription('Download a torrent')
-            ->addArgument('id', InputArgument::REQUIRED, 'Torrent ID')
+            ->setName('transmission:stats')
+            ->setDescription('Show stats from the transmission server')
             ->setHelp("<info>%command.name%</info>
 
-Download a torrent.
+Stats of the transmission server.
 
-Usage: <comment>%command.name%</comment> <info>TORRENT_ID</info>");
+Usage: <comment>%command.name%</comment>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -38,17 +38,6 @@ Usage: <comment>%command.name%</comment> <info>TORRENT_ID</info>");
 
         $config = $configLoader->getConfig()['transmission'];
 
-        $outputFile = sprintf('.%d', time());
-
-        $inputData = array(
-            'command' => 'torrents:download',
-            'id' => $input->getArgument('id'),
-            'output_file' => $outputFile,
-            '-q' => true,
-        );
-
-        $options = [];
-
         if (!empty($config['username']) && !empty($config['password'])) {
             $options = array(
                 'request.options' => array(
@@ -62,27 +51,45 @@ Usage: <comment>%command.name%</comment> <info>TORRENT_ID</info>");
 
             $transmission = new Transmission($configLoader->getConfig()['transmission'], $client);
 
-            $this->getApplication()->doRun(new ArrayInput($inputData), $output);
+            $stats = $transmission->getStats();
 
-            $content = base64_encode(file_get_contents($outputFile));
+            $output->writeln(sprintf("Active torrent(s): %d", $stats['activeTorrentCount']));
 
-            $transmission->add($content, true);
+            foreach (['cumulative-stats' => 'Cumulative stats', 'current-stats' => 'Current stats'] as $k => $v) {
+                $output->writeln(["", $v, str_repeat('-', strlen($v))]);
+                
+                $output->writeln(sprintf(
+                    "Downloaded: %s", 
+                    Formater::humanSize($stats[$k]['downloadedBytes'])
+                ));
+
+                $output->writeln(sprintf(
+                    "Uploaded: %s", 
+                    Formater::humanSize($stats[$k]['uploadedBytes'])
+                ));
+                
+                $output->writeln(sprintf(
+                    "Files Added: %d", 
+                    $stats[$k]['filesAdded']
+                ));
+                
+                $output->writeln(sprintf(
+                    "Seconds Active: %d", 
+                    $stats[$k]['secondsActive']
+                ));
+                
+                $output->writeln(sprintf(
+                    "Sessions: %d", 
+                    $stats[$k]['sessionCount']
+                ));
+            }
         } catch (\Exception $e) {
-            unlink($outputFile);
-
             $output->writeln(sprintf(
                 'An error occured. <error>%s</error>',
                 $e->getMessage()
             ));
-
-            $output->writeln(sprintf('Torrent %s removed', $outputFile));
-
+            
             return;
         }
-
-        unlink($outputFile);
-
-        $output->writeln(sprintf('Download <info>started</info>.', $outputFile));
-        $output->writeln(sprintf('Torrent %s removed', $outputFile));
     }
 }

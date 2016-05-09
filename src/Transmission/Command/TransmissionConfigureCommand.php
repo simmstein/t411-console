@@ -20,7 +20,7 @@ class TransmissionConfigureCommand extends Command
 
 Configure your transmission web remote access.
 
-Usage: <comment>transmission:configure</comment>");
+Usage: <comment>%command.name%</comment>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -11,7 +11,7 @@ class Formater
     public static function humanSize($size, $precision = 2)
     {
         $base = log($size, 1024);
-        $suffixes = array('', 'kB', 'MB', 'GB', 'TB');
+        $suffixes = array('B', 'kB', 'MB', 'GB', 'TB');
 
         return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
