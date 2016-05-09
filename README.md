@@ -356,6 +356,29 @@ Help:
 
 ```
 
+### Get stats of the transmission server
+
+```
+Usage:
+  transmission:stats
+
+Options:
+  -h, --help            Display this help message
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Help:
+ transmission:stats
+ 
+ Stats of the transmission server.
+ 
+ Usage: transmission:stats
+```
+
 ### UserScript
 
 ![UserScript](https://upload.deblan.org/u/2015-08/55cf6a91.png "UserScript")
@@ -364,7 +387,7 @@ Help:
 // ==UserScript==
 // @name        Tranmission cli cmd
 // @namespace   t411
-// @include     http*://www.t411.io/torrents/*
+// @include     http*://www.t411.ch/torrents/*
 // @version     1
 // @grant       none
 // ==/UserScript==

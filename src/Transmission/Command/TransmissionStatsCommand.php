@@ -18,7 +18,7 @@ class TransmissionStatsCommand extends Command
     {
         $this
             ->setName('transmission:stats')
-            ->setDescription('Show stats from the transmission server')
+            ->setDescription('Get stats of the transmission server')
             ->setHelp("<info>%command.name%</info>
 
 Stats of the transmission server.
