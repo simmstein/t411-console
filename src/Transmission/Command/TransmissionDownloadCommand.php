@@ -38,7 +38,11 @@ Usage: <comment>%command.name%</comment> <info>TORRENT_ID</info>");
 
         $config = $configLoader->getConfig()['transmission'];
 
-        $outputFile = sprintf('.%d', time());
+        $outputFile = sprintf(
+            '%s/t411-console-%d',
+            sys_get_temp_dir(),
+            time()
+        );
 
         $inputData = array(
             'command' => 'torrents:download',
