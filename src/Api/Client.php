@@ -13,7 +13,7 @@ class Client
 
     public function __construct()
     {
-        $this->client = new GuzzleClient(['base_url' => 'https://api.t411.ch']);
+        $this->client = new GuzzleClient(['base_url' => 'https://api.t411.li']);
     }
 
     public function getAuthorization($username, $password)
